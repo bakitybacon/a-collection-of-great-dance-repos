@@ -1,3 +1,6 @@
 opengl/bin/
 opengl/obj/
 opengl/debug/
+musictagging/*.csv
+musictagging/*.flac
+musictagging/*.mp3
