@@ -57,7 +57,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\e[1m\e[38;5;69m\u@\h\e[39m\e[0m:\[\033[01;34m\]\W\[\033[00m\]\$ \e[0m'
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[1m\033[38;5;69m\]\u@\h\[\033[39m\033[0m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
 fi
@@ -131,9 +131,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-# make sure we can get ccache optimizations
-export PATH=$PATH:/usr/lib/ccache
-
 # cuda
 export PATH=$PATH:/usr/local/cuda-10.0/bin:/usr/local/cuda-10.0/NsightCompute-2019.1
 export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64:$LD_LIBRARY_PATH
@@ -165,17 +162,23 @@ zipedit() {
 }
 
 # go to ntfs data partition
-alias cddata="cd /media/infrared/789D52821263E12D"
+export DATA="/media/infrared/789D52821263E12D"
 
 # export azw3 from calibre
 alias make_azw3="mkdir ~/azw3; find \"$HOME/Calibre Library\" -name \"*.azw3\" -exec cp {} $HOME/azw3/ \;"
 
 # systemd manual hibernate/suspend
 alias suspend="systemctl suspend"
-alias hibernate="systemctl hibernate"
+alias hibernate="sudo systemctl hibernate"
 
 PATH="/home/infrared/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/infrared/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="/home/infrared/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
 PERL_MB_OPT="--install_base \"/home/infrared/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/infrared/perl5"; export PERL_MM_OPT;
+
+# Perl6
+export PATH=$PATH:/home/$USER/rakudo/bin
+
+# make sure we can get ccache optimizations
+export PATH=/usr/lib/ccache:$PATH
