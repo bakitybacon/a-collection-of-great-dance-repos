@@ -146,7 +146,9 @@ alias go_shady="ssh -X shady@$SHADYADDR"
 # security
 alias gen_pw="head -c 500 /dev/urandom | md5sum"
 cat_pws() {
-    gpg --decrypt /home/infrared/the_crypt/pw.csv.pgp
+    gpg --decrypt ~/the_crypt/pw.csv.pgp 2>/dev/null >/tmp/pw.csv
+    ~/the_crypt/pwmanager.py
+    rm /tmp/pw.csv
 }
 
 # util functions
@@ -161,6 +163,19 @@ zipedit() {
     cd "$curdir"
 }
 
+# adapt cd to automatically ls
+function cs() {
+    cd $1
+    ls
+}
+alias cd=cs
+
+function foctave() {
+    cd ~/octave
+    LD_PRELOAD=libnvblas.so octave &
+    cd -
+}
+
 # go to ntfs data partition
 export DATA="/media/infrared/789D52821263E12D"
 
@@ -171,6 +186,7 @@ alias make_azw3="mkdir ~/azw3; find \"$HOME/Calibre Library\" -name \"*.azw3\" -
 alias suspend="systemctl suspend"
 alias hibernate="sudo systemctl hibernate"
 
+# perl automatically generated configs
 PATH="/home/infrared/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/infrared/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="/home/infrared/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
@@ -179,6 +195,12 @@ PERL_MM_OPT="INSTALL_BASE=/home/infrared/perl5"; export PERL_MM_OPT;
 
 # Perl6
 export PATH=$PATH:/home/$USER/rakudo/bin
+
+# TexLive
+export PATH=/usr/local/texlive/2019/bin/x86_64-linux:$PATH
+
+# rice vpn
+alias ricevpn="/opt/cisco/anyconnect/bin/vpn"
 
 # make sure we can get ccache optimizations
 export PATH=/usr/lib/ccache:$PATH
